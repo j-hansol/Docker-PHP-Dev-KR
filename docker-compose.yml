@@ -1,0 +1,13 @@
+version: '3.3'
+
+services:
+  dev:
+    image: phpdev
+    ports:
+      - "80:80"
+      - "3306:3306"
+      - "22:22"
+    volumes:
+      - ./database:/var/lib/mysql
+      - ./sites:/home/sites
+      - ./site:/home/site

@@ -1,0 +1,22 @@
+#!/bin/bash
+
+init_mysql() {
+    if [ ! -d /var/lib/mysql/mysql ]; then
+        echo "/var/lib/mysql/ 디렉토리에서 데이터베이스 파일을 찾울 수 없습니다."
+        echo "초기화합니다."
+        mysqld --initialize-insecure
+    else
+        echo "데이터베이스 파일을 찾았습니다."
+    fi
+    
+    /usr/bin/mysqld_safe --socket /var/run/mysqld/mysqld.sock &
+    echo "MySQL 데이터베이스 데몬 실행 완료를 기다립니다."
+    while ! mysqladmin status >/dev/null 2>&1;
+    do echo -n . ; sleep 1;
+    done;
+}
+
+service ssh start
+service apache2 start
+init_mysql
+tail -f /var/log/apache2/error.log

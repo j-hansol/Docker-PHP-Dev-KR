@@ -1,0 +1,58 @@
+#!/bin/bash
+
+display_screen() {
+    php_version=`/sbin/phpversion`
+    site=`/sbin/detect_site`
+
+    clear;
+    echo "============================================================="
+    echo "                다목적 Docker PHP 개발환경"
+    echo "============================================================="
+    echo "              PHP 버전 : $php_version"
+    echo "              Apache Site : $site"
+    echo ""
+    echo "              도커 웹 서비스가 실행되었습니다."
+    echo "              -----------------------------"
+    echo "              1 : 쉘 명령어 모드 실행";
+    echo ""
+    echo "              2 : 멀티사이트용 가상호스트로 전환"
+    echo "              3 : 멀티도메인용 가상호스트로 전환"
+    echo ""
+    echo "              4 : PHP 5.6으로 전환"
+    echo "              5 : PHP 7.3으로 전환"
+    echo ""
+    echo "           exit : 도커 웹서비스 프로세스 종료"
+    echo "-------------------------------------------------------------"
+}
+
+menu_select() {
+    export TERM=xterm-color 
+    display_screen
+    while read -p "       번호 또는 명령 입력 : " command
+    do
+        case $command in
+            1)
+                /bin/sh
+                ;;
+            2)
+                /sbin/svhost sites
+                ;;
+            3)
+                /sbin/svhost site
+                ;;
+            4)
+                /sbin/sphp 5.6
+                ;;
+            5)
+                /sbin/sphp 7.3
+                ;;
+            exit)
+                echo "웹 서비스를 종료합니다..";
+                exit;
+        esac
+        
+        display_screen
+    done
+}
+
+menu_select

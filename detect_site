@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ -f /etc/apache2/sites-enabled/sites.conf ]
+then
+    echo "Sites"
+fi
+
+if [ -f /etc/apache2/sites-enabled/site.conf ]
+then
+    echo "Site"
+fi
